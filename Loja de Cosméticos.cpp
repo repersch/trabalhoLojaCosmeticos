@@ -202,30 +202,9 @@ void alterarCliente(Cliente registroClientes[], int posicao, int contClientes) {
 }	
 
 void excluirCliente(Cliente registroClientes[], int posicao, int *contClientes) {
-	for (int i = posicao; i < (*contClientes - 1); i++) {
-		strcpy(registroClientes[i].cpf, registroClientes[i + 1].cpf);
-		strcpy(registroClientes[i].nome, registroClientes[i + 1].nome);
-		registroClientes[i].dataNasc = registroClientes[i + 1].dataNasc;
-		strcpy(registroClientes[i].sexo, registroClientes[i + 1].sexo);
-		registroClientes[i].salario = registroClientes[i + 1].salario;
-		strcpy(registroClientes[i].email, registroClientes[i + 1].email);
-		for (int x = 0; x < 5; x++) {
-				strcpy(registroClientes[i].telefones[x], registroClientes[i + 1].telefones[x]);
-		}
-	}	
-	
-	/*strcpy(registroClientes[*contClientes].cpf, '\0');
-	strcpy(registroClientes[*contClientes].nome, '\0');
-	registroClientes[*contClientes].dataNasc.dia = '\0';
-	registroClientes[*contClientes].dataNasc.mes = '\0';
-	registroClientes[*contClientes].dataNasc.ano = '\0';
-	strcpy(registroClientes[*contClientes].sexo, '\0');
-	registroClientes[*contClientes].salario = '\0';
-	strcpy(registroClientes[*contClientes].email, '\0');
-	for (int x = 0; x < 5; x++) {
-		if ((strlen(registroClientes[*contClientes].telefones[x])) > 0) 
-			strcpy(registroClientes[*contClientes].telefones[x], '\0');
-	}*/
+	for(int i = posicao; i < *contClientes - 1; i++) {
+		registroClientes[i] = registroClientes[i + 1];
+	}
 	(*contClientes)--;
 }
 
@@ -308,12 +287,7 @@ void alterarProduto(Produto registroProdutos[], int indice, int contProdutos) {
 
 void excluirProduto(Produto registroProdutos[], int indice, int *contProdutos) {
 	for (int i = indice; i < (*contProdutos - 1); i++) {
-		registroProdutos[i].codigo = registroProdutos[i + 1].codigo;
-		strcpy(registroProdutos[i].descricao, registroProdutos[i + 1].descricao);
-		registroProdutos[i].mls = registroProdutos[i + 1].mls;
-		registroProdutos[i].preco = registroProdutos[i + 1].preco;
-		registroProdutos[i].desconto = registroProdutos[i + 1].desconto;
-		registroProdutos[i].validade = registroProdutos[i + 1].validade;
+		registroProdutos[i] = registroProdutos[i + 1];
 	}
 	(*contProdutos)--;
 }
@@ -379,7 +353,6 @@ int verificarDadosUnicos(Compra registroCompras[], int contCompras, char cpfClie
 	for (int i = 0; i < contCompras; i++) {
 		if (strcmp(registroCompras[i].cpf, cpfCliente) == 0) {
 			if(registroCompras[i].codigo == codProduto) {
-				//if(strcmp(registroCompras[i].dataCompra, data) == 0) {
 				if (registroCompras[i].dataCompra.dia == data->dia && registroCompras[i].dataCompra.mes == data->mes && registroCompras[i].dataCompra.ano == data->ano) {
 					if(strcmp(registroCompras[i].horaCompra, hora) == 0) {
 						return 1;
@@ -495,11 +468,7 @@ int validarDadosUnicosCompra(Compra registroCompras[], int contCompras) {
 
 void excluirRegistroCompra(Compra registroCompras[], int *contCompras, int indice) {
 	for (int i = indice; i < (*contCompras - 1); i++) {
-		strcpy(registroCompras[i].cpf, registroCompras[i + 1].cpf);
-		registroCompras[i].codigo = registroCompras[i + 1].codigo;
-		registroCompras[i].dataCompra = registroCompras[i + 1].dataCompra;
-		strcpy(registroCompras[i].horaCompra, registroCompras[i + 1].horaCompra);
-		registroCompras[i].valor = registroCompras[i + 1].valor;
+		registroCompras[i] = registroCompras[i + 1];
 	}
 	(*contCompras)--;
 }
@@ -510,8 +479,8 @@ int submenuRelatorios() {
 			"               SUBMENU RELATÓRIOS"
 			"\n---------------------------------------------\n"
 			"1 - Dados por quantidade de telefones\n"
-			"2 - Produtos com a data de validade vencida\n"
-			"3 - Registro de vendas enttre datas\n"
+			"2 - Produtos com a data de validade exppirada\n"
+			"3 - Registro de vendas entre datas\n"
 			"4 - Voltar\n\n"
 			"Escolha uma opção: ");
 	scanf("%d", &op);
@@ -519,7 +488,7 @@ int submenuRelatorios() {
 }
 
 int verificarQuantidadeTelefones(Cliente registroClientes[], int i, int maximo) {
-	int total;
+	int total = 0;
 	for (int x = 0; x < 5; x++) {
 		if (strlen(registroClientes[i].telefones[x]) > 0) {
 			total++;
@@ -544,6 +513,195 @@ time_t converterDataParaSegundos(Data data) {
 	return segundos;
 }
 
+void clientesParaTeste(Cliente registroClientes[], int *contClientes) {
+	//////////////////////////CLIENTE 1/////////////////////////////
+	strcpy(registroClientes[*contClientes].cpf, "36691200845");
+	strcpy(registroClientes[*contClientes].nome, "Renata Persch");
+	registroClientes[*contClientes].dataNasc.dia = 30;
+	registroClientes[*contClientes].dataNasc.mes = 10;
+	registroClientes[*contClientes].dataNasc.ano = 1990;
+	strcpy(registroClientes[*contClientes].email, "renata@mail.com");
+	strcpy(registroClientes[*contClientes].sexo, "f");
+	registroClientes[*contClientes].salario = 5800;
+	strcpy(registroClientes[*contClientes].telefones[0], "16996217567");
+	strcpy(registroClientes[*contClientes].telefones[1], "16996217522");
+	strcpy(registroClientes[*contClientes].telefones[2], "16996217533");
+	(*contClientes)++;
+
+	//////////////////////////CLIENTE 2/////////////////////////////
+	strcpy(registroClientes[*contClientes].cpf, "14521452145");
+	strcpy(registroClientes[*contClientes].nome, "Leticia Romania");
+	registroClientes[*contClientes].dataNasc.dia = 12;
+	registroClientes[*contClientes].dataNasc.mes = 12;
+	registroClientes[*contClientes].dataNasc.ano = 1990;
+	strcpy(registroClientes[*contClientes].email, "leticia@mail.com");
+	strcpy(registroClientes[*contClientes].sexo, "f");
+	registroClientes[*contClientes].salario = 6800;
+	strcpy(registroClientes[*contClientes].telefones[0], "16996122365");
+	strcpy(registroClientes[*contClientes].telefones[1], "16996214422");
+	(*contClientes)++;
+	
+	//////////////////////////CLIENTE 3/////////////////////////////
+	strcpy(registroClientes[*contClientes].cpf, "25632563256");
+	strcpy(registroClientes[*contClientes].nome, "Bruno Ferreira");
+	registroClientes[*contClientes].dataNasc.dia = 4;
+	registroClientes[*contClientes].dataNasc.mes = 5;
+	registroClientes[*contClientes].dataNasc.ano = 1995;
+	strcpy(registroClientes[*contClientes].email, "bruno@mail.com");
+	strcpy(registroClientes[*contClientes].sexo, "m");
+	registroClientes[*contClientes].salario = 4560;
+	strcpy(registroClientes[*contClientes].telefones[0], "16993333567");
+	strcpy(registroClientes[*contClientes].telefones[1], "16991985522");
+	strcpy(registroClientes[*contClientes].telefones[2], "16996335933");
+	strcpy(registroClientes[*contClientes].telefones[3], "16996217533");
+	(*contClientes)++;
+	
+	//////////////////////////CLIENTE 4/////////////////////////////
+	strcpy(registroClientes[*contClientes].cpf, "47854785478");
+	strcpy(registroClientes[*contClientes].nome, "Marina Gonçalves");
+	registroClientes[*contClientes].dataNasc.dia = 14;
+	registroClientes[*contClientes].dataNasc.mes = 7;
+	registroClientes[*contClientes].dataNasc.ano = 1994;
+	strcpy(registroClientes[*contClientes].email, "marina@mail.com");
+	strcpy(registroClientes[*contClientes].sexo, "f");
+	registroClientes[*contClientes].salario = 3450;
+	strcpy(registroClientes[*contClientes].telefones[0], "16945717567");
+	strcpy(registroClientes[*contClientes].telefones[2], "16996144563");
+	(*contClientes)++;
+	
+	//////////////////////////CLIENTE 5/////////////////////////////
+	strcpy(registroClientes[*contClientes].cpf, "58965896589");
+	strcpy(registroClientes[*contClientes].nome, "Pedro Moraes");
+	registroClientes[*contClientes].dataNasc.dia = 29;
+	registroClientes[*contClientes].dataNasc.mes = 11;
+	registroClientes[*contClientes].dataNasc.ano = 1992;
+	strcpy(registroClientes[*contClientes].email, "pedro@mail.com");
+	strcpy(registroClientes[*contClientes].sexo, "m");
+	registroClientes[*contClientes].salario = 5800;
+	strcpy(registroClientes[*contClientes].telefones[0], "16996346567");
+	(*contClientes)++;
+	
+}
+
+void produtosParaTeste(Produto registroProdutos[], int *contProdutos) {
+	//////////////////////////PRODUTO 1/////////////////////////////
+	registroProdutos[*contProdutos].codigo = 13;
+	strcpy(registroProdutos[*contProdutos].descricao, "Perfume");
+	registroProdutos[*contProdutos].mls = 150;
+	registroProdutos[*contProdutos].preco = 450;
+	registroProdutos[*contProdutos].desconto = 5;
+	registroProdutos[*contProdutos].validade.dia = 15;
+	registroProdutos[*contProdutos].validade.mes = 10;
+	registroProdutos[*contProdutos].validade.ano = 2020;
+	(*contProdutos)++;
+	
+	//////////////////////////PRODUTO 2/////////////////////////////
+	registroProdutos[*contProdutos].codigo = 14;
+	strcpy(registroProdutos[*contProdutos].descricao, "Creme");
+	registroProdutos[*contProdutos].mls = 250;
+	registroProdutos[*contProdutos].preco = 90;
+	registroProdutos[*contProdutos].desconto = 2;
+	registroProdutos[*contProdutos].validade.dia = 20;
+	registroProdutos[*contProdutos].validade.mes = 11;
+	registroProdutos[*contProdutos].validade.ano = 2021;
+	(*contProdutos)++;
+	
+	//////////////////////////PRODUTO 3/////////////////////////////
+	registroProdutos[*contProdutos].codigo = 15;
+	strcpy(registroProdutos[*contProdutos].descricao, "Shampoo");
+	registroProdutos[*contProdutos].mls = 150;
+	registroProdutos[*contProdutos].preco = 95;
+	registroProdutos[*contProdutos].desconto = 5;
+	registroProdutos[*contProdutos].validade.dia = 17;
+	registroProdutos[*contProdutos].validade.mes = 07;
+	registroProdutos[*contProdutos].validade.ano = 2021;
+	(*contProdutos)++;
+	
+	//////////////////////////PRODUTO 4/////////////////////////////
+	registroProdutos[*contProdutos].codigo = 16;
+	strcpy(registroProdutos[*contProdutos].descricao, "Desodorante");
+	registroProdutos[*contProdutos].mls = 70;
+	registroProdutos[*contProdutos].preco = 20;
+	registroProdutos[*contProdutos].desconto = 3;
+	registroProdutos[*contProdutos].validade.dia = 20;
+	registroProdutos[*contProdutos].validade.mes = 7;
+	registroProdutos[*contProdutos].validade.ano = 2020;
+	(*contProdutos)++;
+	
+	//////////////////////////PRODUTO 5/////////////////////////////
+	registroProdutos[*contProdutos].codigo = 17;
+	strcpy(registroProdutos[*contProdutos].descricao, "Sabonete");
+	registroProdutos[*contProdutos].mls = 20;
+	registroProdutos[*contProdutos].preco = 11;
+	registroProdutos[*contProdutos].desconto = 0;
+	registroProdutos[*contProdutos].validade.dia = 2;
+	registroProdutos[*contProdutos].validade.mes = 2;
+	registroProdutos[*contProdutos].validade.ano = 2021;
+	(*contProdutos)++;	
+}
+
+void comprasParaTeste(Compra registroCompras[], int *contCompras) {
+	//////////////////////////COMPRA 1/////////////////////////////
+	strcpy(registroCompras[*contCompras].cpf, "36691200845");
+	registroCompras[*contCompras].codigo = 14;
+	registroCompras[*contCompras].dataCompra.dia = 8;
+	registroCompras[*contCompras].dataCompra.mes = 11;
+	registroCompras[*contCompras].dataCompra.ano = 2020;
+	strcpy(registroCompras[*contCompras].horaCompra, "17:30");
+	registroCompras[*contCompras].valor = 145;
+	(*contCompras)++; 
+	
+	//////////////////////////COMPRA 2/////////////////////////////
+	strcpy(registroCompras[*contCompras].cpf, "14521452145");
+	registroCompras[*contCompras].codigo = 17;
+	registroCompras[*contCompras].dataCompra.dia = 10;
+	registroCompras[*contCompras].dataCompra.mes = 10;
+	registroCompras[*contCompras].dataCompra.ano = 2020;
+	strcpy(registroCompras[*contCompras].horaCompra, "18:00");
+	registroCompras[*contCompras].valor = 95;
+	(*contCompras)++; 
+	
+	//////////////////////////COMPRA 3/////////////////////////////
+	strcpy(registroCompras[*contCompras].cpf, "25632563256");
+	registroCompras[*contCompras].codigo = 13;
+	registroCompras[*contCompras].dataCompra.dia = 11;
+	registroCompras[*contCompras].dataCompra.mes = 9;
+	registroCompras[*contCompras].dataCompra.ano = 2020;
+	strcpy(registroCompras[*contCompras].horaCompra, "12:30");
+	registroCompras[*contCompras].valor = 570;
+	(*contCompras)++; 
+	
+	//////////////////////////COMPRA 4/////////////////////////////
+	strcpy(registroCompras[*contCompras].cpf, "47854785478");
+	registroCompras[*contCompras].codigo = 17;
+	registroCompras[*contCompras].dataCompra.dia = 19;
+	registroCompras[*contCompras].dataCompra.mes = 11;
+	registroCompras[*contCompras].dataCompra.ano = 2020;
+	strcpy(registroCompras[*contCompras].horaCompra, "13:45");
+	registroCompras[*contCompras].valor = 74;
+	(*contCompras)++; 
+	
+	//////////////////////////COMPRA 5/////////////////////////////
+	strcpy(registroCompras[*contCompras].cpf, "36691200845");
+	registroCompras[*contCompras].codigo = 15;
+	registroCompras[*contCompras].dataCompra.dia = 22;
+	registroCompras[*contCompras].dataCompra.mes = 11;
+	registroCompras[*contCompras].dataCompra.ano = 2020;
+	strcpy(registroCompras[*contCompras].horaCompra, "15:30");
+	registroCompras[*contCompras].valor = 274;
+	(*contCompras)++; 
+	
+	//////////////////////////COMPRA 6/////////////////////////////
+	strcpy(registroCompras[*contCompras].cpf, "58965896589");
+	registroCompras[*contCompras].codigo = 16;
+	registroCompras[*contCompras].dataCompra.dia = 4;
+	registroCompras[*contCompras].dataCompra.mes = 10;
+	registroCompras[*contCompras].dataCompra.ano = 2020;
+	strcpy(registroCompras[*contCompras].horaCompra, "10:43");
+	registroCompras[*contCompras].valor = 45;
+	(*contCompras)++; 
+		
+}
 
 main() {
 	setlocale(LC_ALL, "Portuguese");
@@ -555,6 +713,11 @@ main() {
 	int contProdutos = 0;
 	Compra registroCompras[MAX];
 	int contCompras = 0;
+		
+	//criando massa para teste
+	clientesParaTeste(registroClientes, &contClientes);
+	produtosParaTeste(registroProdutos, &contProdutos);
+	comprasParaTeste(registroCompras, &contCompras);
 		
 	while (opcao < 5) 
 	{
@@ -590,7 +753,7 @@ main() {
 									puts(registroClientes[encontrou].nome);
 									printf("Data de nascimento: %02d/%02d/%d", registroClientes[encontrou].dataNasc.dia, registroClientes[encontrou].dataNasc.mes,
 		 								registroClientes[encontrou].dataNasc.ano);
-									printf("\nSexo: %c", registroClientes[encontrou].sexo);
+									printf("\nSexo: %s", registroClientes[encontrou].sexo);
 									printf("\nSalário: R$%.2f", registroClientes[encontrou].salario);
 									printf("\nEmail: %s", registroClientes[encontrou].email);
 									printf("\nTelefone(s): ");
@@ -777,7 +940,7 @@ main() {
 						printf("\n\n--- Listar dados de compra ---\n\n");
 						int indice = validarDadosUnicosCompra(registroCompras, contCompras);
 						if (indice == -1) {
-							printf("Não há registro com esses dados.");
+							printf("Não há registro com esses dados.\n\n");
 						} else {
 							char cpf[12];
 							strcpy(cpf, registroCompras[indice].cpf);
@@ -865,12 +1028,13 @@ main() {
 						printf("\n\n--- Registros com mais de X telefones ---\n\n");
 						printf("Determine a quantidade de telefones: ");
 						scanf("%d", &quantTelefones);
+						printf("\n\nRegistro de clientes que possuem mais de %d telefones cadastrados\n\n", quantTelefones);
 						for (int i = 0; i < contClientes; i++) {
 							indice = verificarQuantidadeTelefones(registroClientes, i, quantTelefones);
 							if (indice != -1) {
 								printf("CPF: ");
 								puts(registroClientes[indice].cpf);
-								printf("\nNome: ");
+								printf("Nome: ");
 								puts(registroClientes[indice].nome);
 								printf("Data de nascimento: %02d/%02d/%d", registroClientes[indice].dataNasc.dia, registroClientes[indice].dataNasc.mes,
 		 							registroClientes[indice].dataNasc.ano);
@@ -879,9 +1043,11 @@ main() {
 								printf("Salário: R$%.2f", registroClientes[indice].salario);
 								printf("\nEmail: %s", registroClientes[indice].email);
 								printf("\nTelefone(s): ");
-								for ( int x = 0; x < 5; x++) {
-								printf("\n\t%s", registroClientes[indice].telefones[x]);
-								}
+								for (int x = 0; x < 5; x++) {
+									if ((strlen(registroClientes[i].telefones[x])) > 0) {
+										printf("\n\t%s",registroClientes[i].telefones[x]);
+									}
+								}	
 								printf("\n---------------------------------------------\n\n");	
 							}
 						}	
@@ -918,7 +1084,7 @@ main() {
 						int achou = 0;
 						time_t dataInicial;
 						time_t dataFinal;
-						int cont;
+						int cont = 0;
 						
 						printf("\n\n--- Relatório de compras entre datas ---\n\n");
 						printf("Data inicial\n");
@@ -929,13 +1095,13 @@ main() {
 						criarData(&final);
 						dataInicial = converterDataParaSegundos(inicial);
 						dataFinal = converterDataParaSegundos(final);
-						printf("\n\nCompras feitas entre %02d/%02d/%d e %02d/%02d/%d:", inicial.dia, inicial.mes, inicial.ano, final.dia, final.mes, final.ano);
+						printf("\n\nCompras feitas entre %02d/%02d/%d e %02d/%02d/%d:\n", inicial.dia, inicial.mes, inicial.ano, final.dia, final.mes, final.ano);
 						for (int i = 0; i < contCompras; i++) {
 							time_t  dataDaCompra;
 							dataDaCompra = converterDataParaSegundos(registroCompras[i].dataCompra);
 							if(dataDaCompra > dataInicial && dataDaCompra < dataFinal) {
 								cont++;
-								printf("Cliente \n\tCPF: ");
+								printf("\nCliente \n\tCPF: ");
 								puts(registroCompras[i].cpf);
 								for (int x = 0; x < contClientes && achou == 0; x++) {
 									if (strcmp(registroCompras[i].cpf, registroClientes[x].cpf) == 0) {
@@ -945,7 +1111,7 @@ main() {
 									}
 								}
 								achou = 0;
-								printf("Produto\n\tCódigo: %04d", registroCompras[i].codigo);
+								printf("Produto\n\tCódigo: %d", registroCompras[i].codigo);
 								for (int y = 0; y < contProdutos && achou == 0; y++) {
 									if (registroCompras[i].codigo == registroProdutos[y].codigo) {
 										printf("\n\tDescrição: ");
